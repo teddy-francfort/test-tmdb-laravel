@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Relation::enforceMorphMap([]);
+        Relation::enforceMorphMap([
+            'movie' => Movie::class,
+        ]);
 
         $shouldBeStrict = ! $this->app->isProduction();
         Model::preventLazyLoading($shouldBeStrict);
