@@ -14,7 +14,7 @@ class MovieSeeder extends Seeder
     public function run(): void
     {
         Movie::factory()
-            ->count(10)
+            ->count(100)
             ->sequence(fn (Sequence $sequence) => [
                 'tmdb_id' => $sequence->index + 1,
                 'imdb_id' => $sequence->index + 1,
