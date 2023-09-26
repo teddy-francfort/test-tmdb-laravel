@@ -16,7 +16,7 @@ class MovieControllerShowTest extends TestCase
             ->assertOk()
             ->assertSeeText($movie->title)
             ->assertSeeText($movie->overview)
-            ->assertSeeText($movie->release_date->format('m/d/Y'))
+            ->assertSeeText($movie->release_date->format('d/m/Y'))
             ->assertSeeText($movie->poster_path);
     }
 }
