@@ -28,7 +28,7 @@ vendor/bin/sail up --build
 vendor/bin/sail npm install
 vendor/bin/sail npm run build
 
-# Initialise la base de données avec des données test
+# Initialise la base de données avec des données test (films et un utilisateur)
 # Lancer la commande sans l'option --seed pour ne pas créer des données de test
 vendor/bin/sail artisan migrate:fresh --seed
 
@@ -37,6 +37,13 @@ TMDB_API_TOKEN="mykey"
 ```
 
 Après la phase d'installation, l'application est accessible via http://localhost
+
+Le seeder créé un utilisateur test
+```shell
+login: admin@test.com
+mot de passe : password
+```
+
 
 ## Commande d'import
 
