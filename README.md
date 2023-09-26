@@ -36,6 +36,7 @@ vendor/bin/sail artisan migrate:fresh --seed
 TMDB_API_TOKEN="mykey"
 ```
 
+Après la phase d'installation, l'application est accessible via http://localhost
 
 ## Commande d'import
 
