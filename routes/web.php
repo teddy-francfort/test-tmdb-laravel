@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use App\Livewire\Movies\ShowMovies;
 use App\Livewire\Movies\UpdateMovie;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::middleware([
     })->name('dashboard');
 
     //Movies admin routes
+    Route::get('movies', ShowMovies::class)->name('movies.index');
     Route::get('movies/{movie}/edit', UpdateMovie::class)->name('movies.edit');
 });
