@@ -30,8 +30,7 @@ class Movie extends Model
     protected $guarded = ['id'];
 
     /**
-     * @param Builder<Movie> $query
-     * @return void
+     * @param  Builder<Movie>  $query
      */
     public function scopeTrendingDay(Builder $query): void
     {
@@ -39,8 +38,7 @@ class Movie extends Model
     }
 
     /**
-     * @param Builder<Movie> $query
-     * @return void
+     * @param  Builder<Movie>  $query
      */
     public function scopeTrendingWeek(Builder $query): void
     {

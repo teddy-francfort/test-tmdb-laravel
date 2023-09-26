@@ -37,7 +37,7 @@ class UpdateMovieTest extends TestCase
      *
      * @dataProvider getGoodData
      */
-    public function it_can_update_a_movie(string $field, string $updatedValue): void
+    public function it_can_update_a_movie(string $field, string|bool $updatedValue): void
     {
         $movie = Movie::factory()->createOne([
             'title' => 'Movie title',
@@ -91,6 +91,10 @@ class UpdateMovieTest extends TestCase
             'overview (nullable)' => ['overview', ''],
             'poster_path' => ['overview', '/poster_updated.jpg'],
             'poster_path (nullable)' => ['overview', ''],
+            'is_trending_day (enabled)' => ['is_trending_day', true],
+            'is_trending_day (disabled)' => ['is_trending_day', false],
+            'is_trending_week (enabled)' => ['is_trending_week', true],
+            'is_trending_week (disabled)' => ['is_trending_week', false],
         ];
     }
 
