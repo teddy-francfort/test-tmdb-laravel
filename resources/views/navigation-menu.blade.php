@@ -15,6 +15,15 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('movies.index') }}">
+                        {{ __('Movies') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('trending.movies.index', ['timeWindow' => 'day']) }}">
+                        {{ __('Trending day movies') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('trending.movies.index', ['timeWindow' => 'week']) }}">
+                        {{ __('Trending week movies') }}
+                    </x-nav-link>
                 </div>
             </div>
 
