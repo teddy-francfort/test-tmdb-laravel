@@ -36,7 +36,7 @@ class MoviePolicy
      */
     public function update(User $user, Movie $movie): bool
     {
-        return false;
+        return true;
     }
 
     /**

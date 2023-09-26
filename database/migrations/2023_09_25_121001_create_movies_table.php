@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('imdb_id');
 
             $table->string('title');
-            $table->date('release_date');
-            $table->text('overview');
-            $table->string('poster_path');
+            $table->date('release_date')->nullable();
+            $table->text('overview')->nullable();
+            $table->string('poster_path')->nullable();
 
             $table->text('data')->nullable();
 
