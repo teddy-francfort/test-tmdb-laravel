@@ -40,6 +40,7 @@ class ShowTrendingMovies extends Component
             ->paginate($perPage);
 
         $pageTitle = "Trending movies for the {$this->timeWindow}";
+
         return view('livewire.movies.show-movies', ['movies' => $movies])
             ->title($pageTitle)
             ->with(['title' => $pageTitle]);

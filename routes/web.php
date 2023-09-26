@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('homepage');
 
-Route::resource('movies', MovieController::class)->only(['show']);
+Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
 Route::get('trending/movies/{timeWindow}', ShowTrendingMovies::class)->name('trending.movies.index');
 
 Route::middleware([

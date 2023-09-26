@@ -9,6 +9,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <div>
                     <div class="px-4 sm:px-0">
+                        <img src="{{$movie->poster_url}}" class="w-36">
                         <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{ $movie->overview }}</p>
                     </div>
                     <div class="mt-6 border-t border-gray-100">

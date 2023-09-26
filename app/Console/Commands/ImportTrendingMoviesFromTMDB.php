@@ -7,6 +7,7 @@ use App\Repositories\Datas\MovieData;
 use App\Repositories\TmdbRepository;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 class ImportTrendingMoviesFromTMDB extends Command
 {
@@ -34,6 +35,7 @@ class ImportTrendingMoviesFromTMDB extends Command
         $this->info('Import trending movies from TMDB');
         $this->tmdbRepository = $repository;
 
+        $this->updateConfiguration();
         $this->updateTrendingMovies('day');
         $this->updateTrendingMovies('week');
 
@@ -62,5 +64,11 @@ class ImportTrendingMoviesFromTMDB extends Command
             ->update(["is_trending_{$timeWindow}" => false]);
 
         $this->line("Finish update trending movies for time window {$timeWindow}");
+    }
+
+    public function updateConfiguration(): void
+    {
+        $this->line('Cache configuration from tmdb');
+        Cache::rememberForever('tmdb_configuration', fn () => $this->tmdbRepository->getConfiguration());
     }
 }

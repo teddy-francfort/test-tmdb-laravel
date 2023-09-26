@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Repositories\Datas\ConfigurationData;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -46,5 +50,25 @@ class Movie extends Model
     public function scopeTrendingWeek(Builder $query): void
     {
         $query->where('is_trending_week', true);
+    }
+
+    public function posterUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                /** @var ?ConfigurationData $tmdbConfiguration */
+                $tmdbConfiguration = Cache::get('tmdb_configuration');
+
+                if (is_null($tmdbConfiguration)) {
+                    return $this->poster_path;
+                }
+
+                $posterSize = Arr::last($tmdbConfiguration->poster_sizes, function (string $value, int $key) {
+                    return str_starts_with($value, 'w');
+                });
+
+                return $tmdbConfiguration->secure_base_url.$posterSize.$this->poster_path;
+            }
+        );
     }
 }

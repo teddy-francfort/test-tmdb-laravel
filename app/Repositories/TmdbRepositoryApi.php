@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Repositories\Datas\ConfigurationData;
 use App\Repositories\Datas\MovieData;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
@@ -43,5 +44,15 @@ class TmdbRepositoryApi implements TmdbRepository
         $response = $this->client->get("/movie/{$id}");
 
         return MovieData::from($response->json());
+    }
+
+    public function getConfiguration(): ConfigurationData
+    {
+        $response = $this->client->get('/configuration');
+
+        /** @var array<mixed> $items */
+        $items = $response->json('images');
+
+        return ConfigurationData::from($items);
     }
 }

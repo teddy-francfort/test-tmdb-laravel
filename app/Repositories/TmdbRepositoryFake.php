@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Repositories\Datas\ConfigurationData;
 use App\Repositories\Datas\MovieData;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelData\CursorPaginatedDataCollection;
@@ -26,5 +27,13 @@ class TmdbRepositoryFake implements TmdbRepository
         $response = Storage::disk('test')->json('Feature/Repositories/fixtures/movie_121.json');
 
         return MovieData::from($response);
+    }
+
+    public function getConfiguration(): ConfigurationData
+    {
+        $response = Storage::disk('test')->json('Feature/Repositories/fixtures/configuration.json');
+        $items = $response['images'] ?? [];
+
+        return ConfigurationData::from($items);
     }
 }
