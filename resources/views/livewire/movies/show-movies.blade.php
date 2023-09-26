@@ -7,7 +7,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @foreach ($movies as $movie)
-                <div class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
+                <div wire:key="{{ $movie->id }}" class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                     <h2><a href="{{route('movies.show', ['movie' => $movie])}}" wire:navigate>{{$movie->title}}</a></h2>
                     <dl class="divide-y divide-gray-100">
                         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
