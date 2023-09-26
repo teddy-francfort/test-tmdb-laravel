@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Movie;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,7 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
+        $release_date = CarbonImmutable::now();
         Movie::factory()
             ->count(100)
             ->sequence(fn (Sequence $sequence) => [
@@ -21,6 +23,7 @@ class MovieSeeder extends Seeder
                 'title' => 'Movie title '.($sequence->index + 1),
                 'overview' => fake()->paragraph(),
                 'poster_path' => '/illustration.jpg',
+                'release_date' => $release_date->subYears(3)->addDays($sequence->index)->format('Y-m-d'),
                 'data' => [],
             ])
             ->create();
@@ -34,6 +37,7 @@ class MovieSeeder extends Seeder
                 'title' => 'Movie trending day '.($sequence->index + 100),
                 'overview' => fake()->paragraph(),
                 'poster_path' => '/illustration.jpg',
+                'release_date' => $release_date->subYears(2)->addDays($sequence->index)->format('Y-m-d'),
                 'data' => [],
             ])
             ->create();
@@ -47,6 +51,7 @@ class MovieSeeder extends Seeder
                 'title' => 'Movie trending week '.($sequence->index + 200),
                 'overview' => fake()->paragraph(),
                 'poster_path' => '/illustration.jpg',
+                'release_date' => $release_date->subYears(1)->addDays($sequence->index)->format('Y-m-d'),
                 'data' => [],
             ])
             ->create();

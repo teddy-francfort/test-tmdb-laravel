@@ -43,6 +43,7 @@ class TmdbRepositoryFakeTest extends TestCase
         $movie = $repository->getMovieDetails(121);
 
         $this->assertEquals(121, $movie->tmdb_id);
+        $this->assertEquals('18/12/2002', $movie->release_date->format('d/m/Y'));
         $this->assertEquals('The Lord of the Rings: The Two Towers', $movie->title);
         $this->assertEquals(
             'Frodo and Sam are trekking to Mordor to destroy the One Ring of Power while Gimli, Legolas and Aragorn search for the orc-captured Merry and Pippin. All along, nefarious wizard Saruman awaits the Fellowship members at the Orthanc Tower in Isengard.',

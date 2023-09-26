@@ -2,7 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Movie;
+use App\Repositories\Datas\MovieData;
+use App\Repositories\TmdbRepository;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 
 class ImportTrendingMoviesFromTMDB extends Command
 {
@@ -20,11 +24,43 @@ class ImportTrendingMoviesFromTMDB extends Command
      */
     protected $description = 'Import trending movies from TMDB';
 
+    protected TmdbRepository $tmdbRepository;
+
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(TmdbRepository $repository): int
     {
+        $this->info('Import trending movies from TMDB');
+        $this->tmdbRepository = $repository;
 
+        $this->updateTrendingMovies('day');
+        $this->updateTrendingMovies('week');
+
+        return static::SUCCESS;
+    }
+
+    protected function updateTrendingMovies(string $timeWindow = 'day'): void
+    {
+        $this->line("Start update trending movies for time window {$timeWindow}");
+        $movies = $this->tmdbRepository->getTrendingMovies($timeWindow);
+
+        /** @var MovieData $movie */
+        foreach ($movies as $movie) {
+            $this->comment("Importing movie : ({$movie->tmdb_id}) {$movie->title}");
+            Movie::query()->withoutGlobalScopes()->updateOrCreate(
+                ['tmdb_id' => $movie->tmdb_id],
+                [
+                    ...$movie->toArray(),
+                    "is_trending_{$timeWindow}" => true,
+                ]
+            );
+        }
+
+        $trendingMoviesTmdbId = Arr::pluck($movies->toArray(), 'tmdb_id');
+        Movie::query()->whereNotIn('tmdb_id', $trendingMoviesTmdbId)
+            ->update(["is_trending_{$timeWindow}" => false]);
+
+        $this->line("Finish update trending movies for time window {$timeWindow}");
     }
 }
