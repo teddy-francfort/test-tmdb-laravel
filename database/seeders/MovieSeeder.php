@@ -24,5 +24,31 @@ class MovieSeeder extends Seeder
                 'data' => [],
             ])
             ->create();
+
+        Movie::factory()
+            ->trendingDay()
+            ->count(20)
+            ->sequence(fn (Sequence $sequence) => [
+                'tmdb_id' => $sequence->index + 100,
+                'imdb_id' => $sequence->index + 100,
+                'title' => 'Movie trending day '.($sequence->index + 100),
+                'overview' => fake()->paragraph(),
+                'poster_path' => '/illustration.jpg',
+                'data' => [],
+            ])
+            ->create();
+
+        Movie::factory()
+            ->trendingWeek()
+            ->count(20)
+            ->sequence(fn (Sequence $sequence) => [
+                'tmdb_id' => $sequence->index + 200,
+                'imdb_id' => $sequence->index + 200,
+                'title' => 'Movie trending week '.($sequence->index + 200),
+                'overview' => fake()->paragraph(),
+                'poster_path' => '/illustration.jpg',
+                'data' => [],
+            ])
+            ->create();
     }
 }

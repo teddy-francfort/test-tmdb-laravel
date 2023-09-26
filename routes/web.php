@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Livewire\Movies\ShowMovies;
+use App\Livewire\Movies\ShowTrendingMovies;
 use App\Livewire\Movies\UpdateMovie;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::get('/', function () {
 })->name('homepage');
 
 Route::resource('movies', MovieController::class)->only(['show']);
+Route::get('trending/movies/{timeWindow}', ShowTrendingMovies::class)->name('trending.movies.index');
 
 Route::middleware([
     'auth:sanctum',

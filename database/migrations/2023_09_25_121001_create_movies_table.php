@@ -21,6 +21,9 @@ return new class extends Migration
             $table->text('overview')->nullable();
             $table->string('poster_path')->nullable();
 
+            $table->boolean('is_trending_day')->default(false);
+            $table->boolean('is_trending_week')->default(false);
+
             $table->text('data')->nullable();
 
             $table->timestamps();
