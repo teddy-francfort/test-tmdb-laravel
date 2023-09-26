@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('tmdb_id');
-            $table->string('imdb_id');
+            $table->string('imdb_id')->nullable();
 
             $table->string('title');
             $table->date('release_date')->nullable();

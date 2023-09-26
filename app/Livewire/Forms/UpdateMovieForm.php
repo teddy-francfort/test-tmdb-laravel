@@ -12,10 +12,10 @@ class UpdateMovieForm extends Form
     public string $title = '';
 
     #[Rule('nullable', as: 'overview')]
-    public string $overview = '';
+    public ?string $overview = '';
 
     #[Rule('nullable', as: 'poster path')]
-    public string $poster_path = '';
+    public ?string $poster_path = '';
 
     #[Rule('boolean', as: 'is trending day')]
     public bool $is_trending_day = false;

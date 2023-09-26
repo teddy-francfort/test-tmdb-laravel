@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
+ * @property int $id
+ * @property int $tmdb_id
+ * @property ?string $imdb_id
  * @property string $title
- * @property string $overview
- * @property Carbon $release_date
- * @property string $poster_path
+ * @property ?string $overview
+ * @property ?Carbon $release_date
+ * @property ?string $poster_path
  * @property bool $is_trending_day
  * @property bool $is_trending_week
- * @property array $data
+ * @property ?array $data
  */
 class Movie extends Model
 {
