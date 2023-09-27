@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
-class ImportTrendingMoviesFromTMDB extends Command
+class ImportTrendingMoviesFromTMDBCommand extends Command
 {
     /**
      * The name and signature of the console command.
