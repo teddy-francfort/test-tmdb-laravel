@@ -1,6 +1,10 @@
-# Test - Application 
+# Test - Application Laravel The Movie Database (TMDB)
+
+[![CI workflow](https://github.com/teddy-francfort/test-tmdb-laravel/actions/workflows/ci.yml/badge.svg)](https://github.com/teddy-francfort/test-tmdb-laravel/actions/workflows/ci.yml)
 
 Application Laravel permettant d'afficher les films tendances de TMDB
+
+Les informations sont récupérées via l'[API](https://developer.themoviedb.org/docs) v3 de The Movie Database (TMDB).
 
 L'application se base sur Laravel Jetstream + Livewire 3
 
