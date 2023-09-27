@@ -41,10 +41,14 @@ jobs:
           key: ${{ matrix.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.php-version }}-composer-
-      - name: Install Dependencies
+      - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
         run: php artisan key:generate
+      - name: Install NPM Dependencies
+        run: npm install
+      - name: Build front
+        run: npm run build
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Run tests
