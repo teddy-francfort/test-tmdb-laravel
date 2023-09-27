@@ -6,6 +6,11 @@
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <form wire:submit="searchMovies">
+                <input type="text" wire:model="search">
+
+                <x-button>{{__('Search')}}</x-button>
+            </form>
             @foreach ($movies as $movie)
                 <div wire:key="{{ $movie->id }}" class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 flex flex-row">
                     <div class="p-4">

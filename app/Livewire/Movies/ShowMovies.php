@@ -13,13 +13,26 @@ class ShowMovies extends Component
 {
     use WithPagination;
 
+    public string $search = '';
+
     public int $perPage = 10;
+
+    public function searchMovies(): void
+    {
+        $this->resetPage();
+    }
 
     public function render(): View
     {
         $perPage = ($this->perPage < 10) ? 10 : $this->perPage;
 
-        $movies = Movie::query()->orderByDesc('id')->paginate($perPage);
+        $moviesRequest = Movie::query()->orderByDesc('id');
+
+        if (! empty($this->search)) {
+            $moviesRequest->where('title', 'like', "%{$this->search}%");
+        }
+
+        $movies = $moviesRequest->paginate($perPage);
 
         return view('livewire.movies.show-movies', ['movies' => $movies]);
     }

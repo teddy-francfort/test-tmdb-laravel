@@ -13,6 +13,8 @@ class ShowTrendingMovies extends Component
 {
     use WithPagination;
 
+    public string $search = '';
+
     public string $timeWindow = 'day';
 
     public int $perPage = 10;
@@ -22,6 +24,11 @@ class ShowTrendingMovies extends Component
         if (! in_array($timeWindow, ['day', 'week'])) {
             abort(404);
         }
+    }
+
+    public function searchMovies(): void
+    {
+        $this->resetPage();
     }
 
     public function render(): View
@@ -35,6 +42,10 @@ class ShowTrendingMovies extends Component
             'week' => $moviesRequest->trendingWeek(),
             default => null,
         };
+
+        if (! empty($this->search)) {
+            $moviesRequest->where('title', 'like', "%{$this->search}%");
+        }
 
         $movies = $moviesRequest->orderByDesc('id')
             ->paginate($perPage);

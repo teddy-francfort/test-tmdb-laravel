@@ -69,4 +69,27 @@ class ShowMoviesTest extends TestCase
                 return true;
             });
     }
+
+    /** @test */
+    public function movies_can_be_searched(): void
+    {
+        Movie::factory()->trendingDay()->createOne(['title' => 'Movie trending 123']);
+        /** @var Movie $foundMovie1 */
+        $foundMovie1 = Movie::factory()->trendingDay()->createOne(['title' => 'Movie trending 456']);
+        Movie::factory()->createOne(['title' => 'Movie not trending 123']);
+        /** @var Movie $foundMovie2 */
+        $foundMovie2 = Movie::factory()->createOne(['title' => 'Movie not trending 456']);
+
+        Livewire::test(ShowMovies::class, ['timeWindow' => 'day'])
+            ->set('search', '56')
+            ->set('perPage', 10)
+            ->assertOk()
+            ->assertViewHas('movies', function ($movies) use ($foundMovie1, $foundMovie2) {
+                $this->assertCount(2, $movies);
+                $this->assertContains($foundMovie1->getKey(), $movies->pluck('id'));
+                $this->assertContains($foundMovie2->getKey(), $movies->pluck('id'));
+
+                return true;
+            });
+    }
 }
