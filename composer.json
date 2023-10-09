@@ -63,6 +63,18 @@
             "@pint-test",
             "@test",
             "@stan"
+        ],
+        "fresh": [
+            "@php artisan migrate:fresh"
+        ],
+        "fresh-seed": [
+            "@fresh --seed"
+        ],
+        "build-project": [
+            "composer install",
+            "npm install",
+            "npm run build",
+            "@fresh-seed"
         ]
     },
     "extra": {
