@@ -7,7 +7,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form wire:submit="searchMovies">
-                <input type="text" wire:model="search">
+                <input type="text" wire:model.live.debounce.250ms="search">
 
                 <x-button>{{__('Search')}}</x-button>
             </form>
