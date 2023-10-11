@@ -18,8 +18,12 @@ class MoviePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Movie $movie): bool
+    public function view(?User $user, Movie $movie): bool
     {
+        if ($user === null) {
+            return ! $movie->trashed();
+        }
+
         return true;
     }
 
