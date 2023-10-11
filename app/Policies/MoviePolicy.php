@@ -18,8 +18,12 @@ class MoviePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Movie $movie): bool
+    public function view(?User $user, Movie $movie): bool
     {
+        if ($user === null) {
+            return ! $movie->trashed();
+        }
+
         return true;
     }
 
@@ -44,7 +48,7 @@ class MoviePolicy
      */
     public function delete(User $user, Movie $movie): bool
     {
-        return false;
+        return ! $movie->trashed();
     }
 
     /**
@@ -52,7 +56,7 @@ class MoviePolicy
      */
     public function restore(User $user, Movie $movie): bool
     {
-        return false;
+        return $movie->trashed();
     }
 
     /**

@@ -26,7 +26,7 @@ class ShowMovies extends Component
     {
         $perPage = ($this->perPage < 10) ? 10 : $this->perPage;
 
-        $moviesRequest = Movie::query()->orderByDesc('id');
+        $moviesRequest = Movie::query()->withTrashed()->orderByDesc('id');
 
         if (! empty($this->search)) {
             $moviesRequest->where('title', 'like', "%{$this->search}%");

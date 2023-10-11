@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MovieController;
+use App\Livewire\Movies\ShowMovie;
 use App\Livewire\Movies\ShowMovies;
 use App\Livewire\Movies\ShowTrendingMovies;
 use App\Livewire\Movies\UpdateMovie;
@@ -21,7 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('homepage');
 
-Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
+Route::get('movies/{movie}', ShowMovie::class)
+    ->withTrashed()
+    ->name('movies.show');
 Route::get('trending/movies/{timeWindow}', ShowTrendingMovies::class)->name('trending.movies.index');
 
 Route::middleware([
@@ -35,5 +37,5 @@ Route::middleware([
 
     //Movies admin routes
     Route::get('movies', ShowMovies::class)->name('movies.index');
-    Route::get('movies/{movie}/edit', UpdateMovie::class)->name('movies.edit');
+    Route::get('movies/{movie}/edit', UpdateMovie::class)->withTrashed()->name('movies.edit');
 });
