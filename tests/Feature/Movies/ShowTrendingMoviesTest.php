@@ -42,6 +42,22 @@ class ShowTrendingMoviesTest extends TestCase
     }
 
     /** @test */
+    public function it_doesnt_show_trashed_trending_day_movies(): void
+    {
+        Movie::factory()->trendingDay()->createOne(['title' => 'Movie trending day not trashed']);
+        Movie::factory()->trendingDay()->trashed()->createOne(['title' => 'Movie trending day trashed']);
+
+        $user = User::factory()->createOne();
+        $this->actingAs($user);
+
+        Livewire::test(ShowTrendingMovies::class, ['timeWindow' => 'day'])
+            ->set('perPage', 10)
+            ->assertOk()
+            ->assertSee('Movie trending day not trashed')
+            ->assertDontSee('Movie trending day trashed');
+    }
+
+    /** @test */
     public function it_shows_only_trending_day_movies(): void
     {
         Movie::factory()->trendingDay()->createOne(['title' => 'Movie trending day']);
@@ -52,6 +68,22 @@ class ShowTrendingMoviesTest extends TestCase
             ->assertOk()
             ->assertSee('Movie trending day')
             ->assertDontSee('Movie not trending');
+    }
+
+    /** @test */
+    public function it_doesnt_show_trashed_trending_week_movies(): void
+    {
+        Movie::factory()->trendingWeek()->createOne(['title' => 'Movie trending week not trashed']);
+        Movie::factory()->trendingWeek()->trashed()->createOne(['title' => 'Movie trending week trashed']);
+
+        $user = User::factory()->createOne();
+        $this->actingAs($user);
+
+        Livewire::test(ShowTrendingMovies::class, ['timeWindow' => 'week'])
+            ->set('perPage', 10)
+            ->assertOk()
+            ->assertSee('Movie trending week not trashed')
+            ->assertDontSee('Movie trending week trashed');
     }
 
     /** @test */
