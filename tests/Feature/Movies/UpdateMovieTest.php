@@ -21,6 +21,18 @@ class UpdateMovieTest extends TestCase
     }
 
     /** @test */
+    public function authenticated_user_can_access_edit_page_for_trashed_movie(): void
+    {
+        $movie = Movie::factory()->trashed()->createOne(['title' => 'Movie title']);
+        $user = User::factory()->createOne();
+
+        $this->actingAs($user);
+
+        $this->get(route('movies.edit', ['movie' => $movie]))
+            ->assertOk();
+    }
+
+    /** @test */
     public function authenticated_user_can_update(): void
     {
         $movie = Movie::factory()->createOne(['title' => 'Movie title']);
@@ -81,6 +93,28 @@ class UpdateMovieTest extends TestCase
         $movie->refresh();
 
         $this->assertNotEquals($updatedValue, $movie->$field);
+    }
+
+    /** @test */
+    public function trashed_movie_can_be_updated(): void
+    {
+        $movie = Movie::factory()->trashed()->createOne([
+            'title' => 'Movie title',
+            'overview' => 'movie overview',
+        ]);
+        $user = User::factory()->createOne();
+
+        $this->actingAs($user);
+
+        Livewire::test(UpdateMovie::class, ['movie' => $movie])
+            ->set('form.title', 'Movie updated')
+            ->call('save')
+            ->assertHasNoErrors()
+            ->assertSessionHas('flash.banner', 'Movie updated !');
+
+        $movie->refresh();
+
+        $this->assertEquals('Movie updated', $movie->title);
     }
 
     public static function getGoodData(): array

@@ -37,5 +37,5 @@ Route::middleware([
 
     //Movies admin routes
     Route::get('movies', ShowMovies::class)->name('movies.index');
-    Route::get('movies/{movie}/edit', UpdateMovie::class)->name('movies.edit');
+    Route::get('movies/{movie}/edit', UpdateMovie::class)->withTrashed()->name('movies.edit');
 });
