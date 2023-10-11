@@ -48,7 +48,7 @@ class MoviePolicy
      */
     public function delete(User $user, Movie $movie): bool
     {
-        return false;
+        return ! $movie->trashed();
     }
 
     /**

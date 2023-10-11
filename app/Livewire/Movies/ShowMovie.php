@@ -22,4 +22,10 @@ class ShowMovie extends Component
     {
         return view('livewire.movies.show-movie');
     }
+
+    public function delete(): void
+    {
+        $this->authorize('delete', $this->movie);
+        $this->movie->delete();
+    }
 }
