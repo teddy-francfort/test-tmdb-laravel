@@ -15,7 +15,7 @@ class ShowMoviesTest extends TestCase
     public function guest_cannot_access_the_route(): void
     {
         $this->get(route('movies.index'))
-            ->assertRedirect();
+            ->assertRedirect(route('login'));
     }
 
     /** @test */
@@ -45,6 +45,20 @@ class ShowMoviesTest extends TestCase
                 'Movie title 2',
                 'Movie title 1',
             ]);
+    }
+
+    /** @test */
+    public function trashed_movies_are_displayed(): void
+    {
+        Movie::factory()->trashed()->createOne(['title' => 'Movie title']);
+        $user = User::factory()->createOne();
+
+        $this->actingAs($user);
+
+        Livewire::test(ShowMovies::class)
+            ->set('perPage', 10)
+            ->assertOk()
+            ->assertSee('Movie title');
     }
 
     /** @test */
