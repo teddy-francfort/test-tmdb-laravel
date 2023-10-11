@@ -56,7 +56,7 @@ class MoviePolicy
      */
     public function restore(User $user, Movie $movie): bool
     {
-        return false;
+        return $movie->trashed();
     }
 
     /**

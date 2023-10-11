@@ -28,4 +28,10 @@ class ShowMovie extends Component
         $this->authorize('delete', $this->movie);
         $this->movie->delete();
     }
+
+    public function restore(): void
+    {
+        $this->authorize('restore', $this->movie);
+        $this->movie->restore();
+    }
 }
